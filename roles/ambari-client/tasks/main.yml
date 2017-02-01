@@ -1,0 +1,15 @@
+---
+- name: Add Hortonworks HDF Repo
+  copy: src=ambari.repo dest=/etc/yum.repos.d/ambari.repo owner=root group=root mode=644
+
+- name: Install Ambari Agent
+  yum: name=ambari-agent state=installed update_cache=true
+
+- name: Update Ambari Agent Config
+  lineinfile:
+    dest: /etc/ambari-agent/conf/ambari-agent.ini
+    state: present
+    regexp: '^hostname='
+    line: 'hostname=ambari-1.nifi.local'
+  notify:
+    - Start Ambari Agent

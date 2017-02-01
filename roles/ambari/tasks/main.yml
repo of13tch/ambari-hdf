@@ -1,0 +1,17 @@
+---
+- name: Add Hortonworks HDF Repo 
+  copy: src=ambari.repo dest=/etc/yum.repos.d/ambari.repo owner=root group=root mode=644
+
+- name: Install Ambari Server
+  yum: name=ambari-server state=installed update_cache=true
+  notify:
+    - Start Ambari Server
+
+- name: Setup Ambari Server
+  command: ambari-server setup -s
+
+- name: Install Ambari HDF MPACK
+  command: ambari-server install-mpack --mpack=http://public-repo-1.hortonworks.com/HDF/centos7/2.x/updates/2.1.1.0/tars/hdf_ambari_mp/hdf-ambari-mpack-2.1.1.0-2.tar.gz --purge 
+  notify:
+    - Start Ambari 
+

@@ -1,0 +1,6 @@
+---
+- name: Start NTP
+  service: name=ntpd state=started
+
+- name: Update DB
+  command: updatedb

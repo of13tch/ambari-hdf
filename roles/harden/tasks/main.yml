@@ -1,0 +1,31 @@
+---
+- name: Add Python SELinux
+  yum: name=libselinux-python state=installed update_cache=true
+
+- name: Create Wheel Group
+  group:
+    name: wheel
+    state: present
+
+- name: Allow Wheel passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+  
+- name: Create Admin User
+  user:
+    name=admin
+    password={{ admin_password }}
+    groups=wheel
+    append=yes
+    state=present
+    createhome=yes
+
+- name: Add Admin Auth Key
+  authorized_key:
+    user=admin
+    key="{{ common_pub_key }}"
+    state=present
+

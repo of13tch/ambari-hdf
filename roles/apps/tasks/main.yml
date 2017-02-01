@@ -1,0 +1,14 @@
+---
+- name: Install VMWare Open-Tools
+  yum: name=open-vm-tools state=installed update_cache=true
+
+- name: Install Vim
+  yum: name=vim state=installed update_cache=true
+
+- name: Install NTP
+  yum: name=ntp state=installed update_cache=true
+
+- name: Install mlocate
+  yum: name=mlocate state=installed update_cache=true
+  notify:
+    - Update DB

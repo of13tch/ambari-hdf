@@ -1,0 +1,12 @@
+---
+- name: Install ca-certificates
+  yum: name=ca-certificates state=installed update_cache=true
+
+- name: Install openldap tools
+  yum: name=openldap-clients state=installed update_cache=true
+
+- name: Move Certificate to Store
+  copy: src=ad.cer dest=/etc/pki/ca-trust/source/anchors/ad.cer owner=root group=root mode=644
+
+- name: Update CA Store
+  command: update-ca-trust force-enable && update-ca-trust extract && update-ca-trust check

@@ -1,0 +1,26 @@
+---
+#- hosts: all
+#  remote_user: root
+#  roles:
+#    - harden
+#
+- hosts: all
+  remote_user: admin
+  become: yes
+  roles:
+    - ldapsearch
+#    - apps
+#    - swapfile
+
+#
+#- hosts: ambari 
+#  remote_user: admin
+#  become: yes
+#  roles:
+#    - ambari
+
+#- hosts: all
+#  remote_user: admin
+#  become: yes
+#  roles:
+#    - ambari-client
